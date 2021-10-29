@@ -13,7 +13,8 @@ class SuperHeroApp() :
             command = self._parse_command(_input)
             self.command_dispatcher(command)
     def _parse_command(self, _input) :
-        return _input.strip().lower().split('-')
+        return [i.strip() for i in _input.strip().lower().split('-')]
+        
     def command_dispatcher(self, command) :
         if len(command) <= 1:
             if not command or command[0] == "exit":
@@ -24,7 +25,7 @@ class SuperHeroApp() :
             action, *arguments = command
             print(action, *arguments)
             if action == "compare":
-                self._compare_heroes([" ".join(first_hero), " ".join(second_hero)])
+                self._compare_heroes(arguments)
 
     def _compare_heroes(self, heroes) :
         hero_one = self._s.get_hero_stats(heroes[0])
@@ -34,9 +35,9 @@ class SuperHeroApp() :
         # print(power_one, power_two, hp_one, hp_two)
         # print(hp_two - power_one, hp_one - power_two)
         if hp_two - power_one > 0 and hp_two - power_one > hp_one - power_two:
-            print(f"{' '.join(second_hero).title()} победил! Осталось здоровья: {hp_two - power_one}")
+            print(f"{heroes[1].title()} победил! Осталось здоровья: {hp_two - power_one}")
         elif hp_one - power_two > 0 and hp_one - power_two > hp_two - power_one :
-            print(f"{' '.join(first_hero).title()} победил! Осталось здоровья: {hp_one - power_two}")
+            print(f"{heroes[0].title()} победил! Осталось здоровья: {hp_one - power_two}")
         else :
             print("Ничья!")
 if __name__ == "__main__" :
