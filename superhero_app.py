@@ -24,16 +24,17 @@ class SuperHeroApp() :
             action, *arguments = command
             print(action, *arguments)
             if action == "compare" :
-                self._compare_heroes(arguments)
+                num = 0
+                for i in arguments :
+                    if i == "vs" :
+                        first_hero = arguments[:num]
+                        second_hero = arguments[num+1:]
+                    num += 1
+                self._compare_heroes([" ".join(first_hero), " ".join(second_hero)])
+
     def _compare_heroes(self, heroes) :
-        num = 0
-        for i in heroes :
-            if i == "vs" :
-                first_hero = heroes[:num]
-                second_hero = heroes[num+1:]
-            num += 1
-        hero_one = self._s.get_hero_stats(" ".join(first_hero))
-        hero_two = self._s.get_hero_stats(" ".join(second_hero))
+        hero_one = self._s.get_hero_stats(heroes[0])
+        hero_two = self._s.get_hero_stats(heroes[1])
         power_one, hp_one = int(hero_one["power"]), int(hero_one["durability"])
         power_two, hp_two = int(hero_two["power"]), int(hero_two["durability"])
         # print(power_one, power_two, hp_one, hp_two)
