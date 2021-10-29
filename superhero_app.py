@@ -3,7 +3,7 @@ class SuperHeroApp() :
     def __init__(self)            :
            self._s = SuperHeroAPI(API=API_KEY)
            self._status = True
-           self._prelude_text = "Потом напишу help, compare name name, exit "
+           self._prelude_text = "Потом напишу help, compare -name -name, exit "
     def _change_status(self) :
         self._status = False
     def run(self) :
@@ -13,7 +13,7 @@ class SuperHeroApp() :
             command = self._parse_command(_input)
             self.command_dispatcher(command)
     def _parse_command(self, _input) :
-        return _input.strip().lower().split()
+        return _input.strip().lower().split('-')
     def command_dispatcher(self, command) :
         if len(command) <= 1:
             if not command or command[0] == "exit":
@@ -23,13 +23,7 @@ class SuperHeroApp() :
         else :
             action, *arguments = command
             print(action, *arguments)
-            if action == "compare" :
-                num = 0
-                for i in arguments :
-                    if i == "vs" :
-                        first_hero = arguments[:num]
-                        second_hero = arguments[num+1:]
-                    num += 1
+            if action == "compare":
                 self._compare_heroes([" ".join(first_hero), " ".join(second_hero)])
 
     def _compare_heroes(self, heroes) :
